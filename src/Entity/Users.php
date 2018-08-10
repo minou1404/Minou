@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  */
-class Users
+class Users implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -28,6 +31,12 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=80)
+     * * @Assert\Length(
+     * min = 8,
+     * max = 15,
+     * minMessage = "Entrez un mot de passe supérieur à 8 carc.",
+     * maxMessage = "Entrez un mot de passe infèrieur à 15 carc."
+     * )
      */
     private $password;
 
@@ -36,10 +45,10 @@ class Users
      */
     private $phone;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created;
+    // /**
+    //  * @ORM\Column(type="datetime")
+    //  */
+    // private $created;
 
     /**
      * @ORM\Column(type="datetime")
@@ -104,22 +113,33 @@ class Users
         return $this->created;
     }
 
-    public function setCreated(\DateTimeInterface $created): self
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
     public function getUpdated(): ?\DateTimeInterface
     {
         return $this->updated;
     }
 
-    public function setUpdated(\DateTimeInterface $updated): self
+    public function setUpdated(): self
     {
-        $this->updated = $updated;
+        $this->updated = new \DateTime();
 
         return $this;
+    }
+
+    public function getRole()
+    {
+        return array("ROLE_USER");
+    }
+
+    public function getSalt()
+    {}
+
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {
+        return $this->getEmail();
     }
 }

@@ -1,7 +1,32 @@
 {% extends 'base-offline.html.twig' %}
 
-{% block title %} Login {% endblock %}
+{% block title %}Sign IN{% endblock %}
 
-{% block style_background %} 
-    style="background-image:url(assets/static/images/bg.jpg)"
-{% endblock %}
+{% block titre %} Login {% endblock %} {% block style_background %} style="background-image:url(assets/static/images/bg2.jpg)" {% endblock %} {% block formulaire %}
+ {{ form_start(formulaire) }} 
+ 
+<div class="form-group">
+    {{ form_label(formulaire.email, 'Entrez votre adresse email : ', {'label_attr' : {'class' : 'text-normal text-dark'}})  }}
+    {{ form_errors(formulaire.email) }} 
+    {{ form_widget(formulaire.email, {'attr' : {'class' : 'form-control'}})  }}
+</div>
+<div class="form-group">
+    {{ form_label(formulaire.password, 'Entrez votre mot de passe : ', {'label_attr' : {'class' : 'text-normal text-dark'}})  }}
+    {{ form_errors(formulaire.password) }} 
+    {{ form_widget(formulaire.password, {'attr' : {'class' : 'form-control'}})  }}
+</div>  
+
+<div class="form-group">
+    <div class="peers ai-c jc-sb fxw-nw">
+        <div class="peer">
+            <div class="peers ai-c">
+                <a href="/register">
+                    <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Pas encore inscrit ?</span></label>
+                </a>
+            </div>
+        </div>
+        <div class="peer"><button type="submit" class="btn btn-primary">Login</button></div>
+    </div>
+</div>
+
+{{ form_end(formulaire) }} {% endblock %}
